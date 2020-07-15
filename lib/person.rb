@@ -18,24 +18,24 @@ class Person
         @hygiene
     end
     #-------
-    def hygiene
-        if @hygiene > 10 
-            return 10
+    def hygiene=(hygiene)
+        if hygiene > 10
+            @hygiene = 10
+        elsif hygiene < 0
+            @hygiene = 0
+        else 
+            @hygiene = hygiene
         end
-        if @hygiene < 0
-            return 0
-        end
-        return @hygiene
     end
     #-------
-    def happiness
-        if @happiness > 10 
-            return 10
+    def happiness=(happiness)
+        if happiness > 10
+            @happiness = 10
+        elsif happiness < 0
+            @happiness = 0
+        else 
+            @happiness = happiness
         end
-        if @happiness < 0
-            return 0
-        end    
-    return @happiness
     end
     #-------
     def bank_account
@@ -62,35 +62,38 @@ class Person
     end
     #-------
     def take_bath
-        @hygiene += 4
-        if @hygiene > 10
-            hygiene
-        end
+        self.hygiene += 4
         return "♪ Rub-a-dub just relaxing in the tub ♫"
     end
     #-------
     def work_out
-        @hygiene -= 3
-        if @hygiene < 0
-            hygiene
-        end
-        @happiness += 2
-        if @happiness > 10
-            happiness
-        end
+        self.hygiene -= 3
+        
+        self.happiness += 2
+        
         return "♪ another one bites the dust ♫"
     end
     #-------
     def call_friend(name)
-        @happiness += 3
+        self.happiness += 3
         name.happiness += 3
-        if @happiness > 10
-            happiness
+        return "Hi #{name.name}! It's #{self.name}. How are you?"
+    end
+    #-------
+    def start_conversation(name, topic)
+        if topic == "politics"
+            self.happiness -= 2
+            name.happiness -= 2
+            return "blah blah partisan blah lobbyist"
         end
-        if name.happiness > 10
-            happiness
+        if topic == "weather"
+            self.happiness += 1
+            name.happiness += 1
+            return "blah blah sun blah rain"
         end
-        return "Hi #{name}! It's #{@name}. How are you?"
+        if topic != "politics" && topic != "weather"
+            return "blah blah blah blah blah"
+        end
     end
     kanye = Person.new("kanye")
     kanye.take_bath
